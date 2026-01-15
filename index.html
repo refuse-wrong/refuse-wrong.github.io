@@ -1,3 +1,87 @@
 ---
-layout: home
+layout: default
+title: Home
 ---
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+
+<style>
+  .home-container {
+    max-width: 750px;
+    margin: 60px auto;
+    padding: 0 20px;
+    font-family: 'Noto Serif SC', serif;
+  }
+
+  .home-header {
+    text-align: center;
+    margin-bottom: 80px;
+  }
+
+  .home-header h1 {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 3rem;
+    color: #2c3e50;
+    margin-bottom: 10px;
+  }
+
+  .post-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .post-item {
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 1px dashed #eee;
+    transition: all 0.3s ease;
+  }
+
+  /* 鼠标悬停效果：文章标题稍微变色并平移 */
+  .post-item:hover {
+    padding-left: 10px;
+    border-bottom-color: #3498db;
+  }
+
+  .post-link {
+    text-decoration: none;
+    color: #2c3e50;
+    font-size: 1.5rem;
+    font-family: 'ZCOOL XiaoWei', serif;
+    display: block;
+  }
+
+  .post-meta {
+    color: #999;
+    font-size: 0.9rem;
+    margin-top: 5px;
+  }
+
+  .post-excerpt {
+    margin-top: 10px;
+    color: #666;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+</style>
+
+<div class="home-container">
+  <header class="home-header">
+    <h1>Refuse Wrong</h1>
+    <p style="color: #7f8c8d; letter-spacing: 2px;">拒绝平庸，写下时间的注脚</p>
+  </header>
+
+  <ul class="post-list">
+    {% for post in site.posts %}
+      <li class="post-item">
+        <a class="post-link" href="{{ post.url | relative_url }}">
+          {{ post.title | escape }}
+        </a>
+        <div class="post-meta">{{ post.date | date: "%Y年 %m月 %d日" }}</div>
+        <div class="post-excerpt">
+          {{ post.content | strip_html | truncate: 100 }}
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
