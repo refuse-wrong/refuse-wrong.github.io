@@ -10,7 +10,6 @@ title: Home
   .home-header { text-align: center; margin-bottom: 60px; }
   .home-header h1 { font-family: 'ZCOOL XiaoWei', serif; font-size: 3rem; color: #2c3e50; }
   
-  /* 分区标题样式 */
   .category-section { margin-bottom: 50px; }
   .category-title { 
     font-family: 'ZCOOL XiaoWei', serif; 
@@ -22,7 +21,6 @@ title: Home
     display: flex;
     align-items: center;
   }
-  .category-title::before { content: "✦"; margin-right: 10px; font-size: 1.2rem; }
 
   .post-list { list-style: none; padding: 0; }
   .post-item { 
@@ -33,16 +31,10 @@ title: Home
     padding: 8px 0;
     border-bottom: 1px inset #f9f9f9;
   }
-  .post-link { 
-    text-decoration: none; 
-    color: #34495e; 
-    font-size: 1.1rem; 
-    transition: 0.2s;
-  }
+  .post-link { text-decoration: none; color: #34495e; font-size: 1.1rem; transition: 0.2s; }
   .post-link:hover { color: #e67e22; padding-left: 5px; }
-  .post-date { color: #bdc3c7; font-size: 0.85rem; font-family: sans-serif; }
-  
-  .empty-msg { color: #ccc; font-style: italic; font-size: 0.9rem; }
+  .post-date { color: #bdc3c7; font-size: 0.85rem; }
+  .empty-msg { color: #ccc; font-style: italic; font-size: 0.9rem; list-style: none; }
 </style>
 
 <div class="home-container">
@@ -52,47 +44,53 @@ title: Home
   </header>
 
   <section class="category-section">
-    <h2 class="category-title">学习 · 向上生长</h2>
+    <h2 class="category-title">📖 学习 · 向上生长</h2>
     <ul class="post-list">
       {% assign posts = site.categories['学习'] %}
-      {% for post in posts %}
-        <li class="post-item">
-          <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title }}</a>
-          <span class="post-date">{{ post.date | date: "%Y-%m-%d" }}</span>
-        </li>
-      {% empty %}
+      {% if posts.size > 0 %}
+        {% for post in posts %}
+          <li class="post-item">
+            <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title }}</a>
+            <span class="post-date">{{ post.date | date: "%Y-%m-%d" }}</span>
+          </li>
+        {% endfor %}
+      {% else %}
         <li class="empty-msg">暂无学习笔记，快去搬砖...</li>
-      {% endfor %}
+      {% endif %}
     </ul>
   </section>
 
   <section class="category-section">
-    <h2 class="category-title" style="color: #27ae60; border-bottom-color: #2ecc71;">生活 · 烟火人间</h2>
+    <h2 class="category-title" style="color: #27ae60; border-bottom-color: #2ecc71;">🏠 生活 · 烟火人间</h2>
     <ul class="post-list">
       {% assign posts = site.categories['生活'] %}
-      {% for post in posts %}
-        <li class="post-item">
-          <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title }}</a>
-          <span class="post-date">{{ post.date | date: "%Y-%m-%d" }}</span>
-        </li>
-      {% empty %}
+      {% if posts.size > 0 %}
+        {% for post in posts %}
+          <li class="post-item">
+            <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title }}</a>
+            <span class="post-date">{{ post.date | date: "%Y-%m-%d" }}</span>
+          </li>
+        {% endfor %}
+      {% else %}
         <li class="empty-msg">日子平淡，还没留下痕迹...</li>
-      {% endfor %}
+      {% endif %}
     </ul>
   </section>
 
   <section class="category-section">
-    <h2 class="category-title" style="color: #8e44ad; border-bottom-color: #9b59b6;">游戏 · 虚拟现实</h2>
+    <h2 class="category-title" style="color: #8e44ad; border-bottom-color: #9b59b6;">🎮 游戏 · 虚拟现实</h2>
     <ul class="post-list">
       {% assign posts = site.categories['游戏'] %}
-      {% for post in posts %}
-        <li class="post-item">
-          <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title }}</a>
-          <span class="post-date">{{ post.date | date: "%Y-%m-%d" }}</span>
-        </li>
-      {% empty %}
+      {% if posts.size > 0 %}
+        {% for post in posts %}
+          <li class="post-item">
+            <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title }}</a>
+            <span class="post-date">{{ post.date | date: "%Y-%m-%d" }}</span>
+          </li>
+        {% endfor %}
+      {% else %}
         <li class="empty-msg">还没来得及上线打怪...</li>
-      {% endfor %}
+      {% endif %}
     </ul>
   </section>
 </div>
