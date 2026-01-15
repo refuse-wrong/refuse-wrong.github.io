@@ -1,31 +1,41 @@
 ---
 layout: default
 ---
-<article class="post">
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
   <header class="post-header">
-    <h1 class="post-title">{{ page.title | escape }}</h1>
+    <h1 class="post-title p-name" itemprop="name headline">{{ page.title | escape }}</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
+        {{ page.date | date: "%Y年 %m月 %d日" }}
+      </time>
+    </p>
   </header>
 
-  <div class="post-content">
+  <div class="post-content e-content" itemprop="articleBody">
     {{ content }}
   </div>
+
+  <a class="u-url" href="{{ page.url | relative_url }}" hidden></a>
 </article>
 
-<hr>
+<hr style="margin: 3rem 0;">
 
-<script src="https://giscus.app/client.js"
-        data-repo="refuse-wrong/refuse-wrong.github.io"
-        data-repo-id="R_kgDOQ6RRWg"
-        data-category="Announcements"
-        data-category-id="DIC_kwDOQ6RRWs4C0-6k"
-        data-mapping="title"
-        data-strict="0"
-        data-reactions-enabled="0"
-        data-emit-metadata="0"
-        data-input-position="top"
-        data-theme="preferred_color_scheme"
-        data-lang="zh-CN"
-        data-loading="lazy"
-        crossorigin="anonymous"
-        async>
-</script>
+<div class="comments">
+  <script src="https://giscus.app/client.js"
+          data-repo="refuse-wrong/refuse-wrong.github.io"
+          data-repo-id="R_kgDOQ6RRWg"
+          data-category="Announcements"
+          data-category-id="DIC_kwDOQ6RRWs4C0-6k"
+          data-mapping="title"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="top"
+          data-theme="preferred_color_scheme"
+          data-lang="zh-CN"
+          data-loading="lazy"
+          crossorigin="anonymous"
+          async>
+  </script>
+</div>
