@@ -1,7 +1,9 @@
 title: Refuse Wrong 的随笔
 description: 拒绝平庸，记录成长的每一天。
-theme: minima
+
+# 只保留 remote_theme，并删除 theme 那一行
 remote_theme: jekyll/minima
+
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
