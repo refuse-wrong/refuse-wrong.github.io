@@ -6,82 +6,93 @@ title: Home
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
 
 <style>
-  .home-container {
-    max-width: 750px;
-    margin: 60px auto;
-    padding: 0 20px;
-    font-family: 'Noto Serif SC', serif;
+  .home-container { max-width: 800px; margin: 40px auto; padding: 0 20px; font-family: 'Noto Serif SC', serif; }
+  .home-header { text-align: center; margin-bottom: 60px; }
+  .home-header h1 { font-family: 'ZCOOL XiaoWei', serif; font-size: 3rem; color: #2c3e50; }
+  
+  /* 分区标题样式 */
+  .category-section { margin-bottom: 50px; }
+  .category-title { 
+    font-family: 'ZCOOL XiaoWei', serif; 
+    font-size: 1.8rem; 
+    color: #e67e22; 
+    border-bottom: 2px solid #f39c12;
+    padding-bottom: 5px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
   }
+  .category-title::before { content: "✦"; margin-right: 10px; font-size: 1.2rem; }
 
-  .home-header {
-    text-align: center;
-    margin-bottom: 80px;
+  .post-list { list-style: none; padding: 0; }
+  .post-item { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: baseline;
+    margin-bottom: 15px; 
+    padding: 8px 0;
+    border-bottom: 1px inset #f9f9f9;
   }
-
-  .home-header h1 {
-    font-family: 'ZCOOL XiaoWei', serif;
-    font-size: 3rem;
-    color: #2c3e50;
-    margin-bottom: 10px;
+  .post-link { 
+    text-decoration: none; 
+    color: #34495e; 
+    font-size: 1.1rem; 
+    transition: 0.2s;
   }
-
-  .post-list {
-    list-style: none;
-    padding: 0;
-  }
-
-  .post-item {
-    margin-bottom: 40px;
-    padding-bottom: 20px;
-    border-bottom: 1px dashed #eee;
-    transition: all 0.3s ease;
-  }
-
-  /* 鼠标悬停效果：文章标题稍微变色并平移 */
-  .post-item:hover {
-    padding-left: 10px;
-    border-bottom-color: #3498db;
-  }
-
-  .post-link {
-    text-decoration: none;
-    color: #2c3e50;
-    font-size: 1.5rem;
-    font-family: 'ZCOOL XiaoWei', serif;
-    display: block;
-  }
-
-  .post-meta {
-    color: #999;
-    font-size: 0.9rem;
-    margin-top: 5px;
-  }
-
-  .post-excerpt {
-    margin-top: 10px;
-    color: #666;
-    font-size: 1rem;
-    line-height: 1.6;
-  }
+  .post-link:hover { color: #e67e22; padding-left: 5px; }
+  .post-date { color: #bdc3c7; font-size: 0.85rem; font-family: sans-serif; }
+  
+  .empty-msg { color: #ccc; font-style: italic; font-size: 0.9rem; }
 </style>
 
 <div class="home-container">
   <header class="home-header">
     <h1>Refuse Wrong</h1>
-    <p style="color: #7f8c8d; letter-spacing: 2px;">拒绝平庸，写下时间的注脚</p>
+    <p>时间轴上的三个平行世界</p>
   </header>
 
-  <ul class="post-list">
-    {% for post in site.posts %}
-      <li class="post-item">
-        <a class="post-link" href="{{ post.url | relative_url }}">
-          {{ post.title | escape }}
-        </a>
-        <div class="post-meta">{{ post.date | date: "%Y年 %m月 %d日" }}</div>
-        <div class="post-excerpt">
-          {{ post.content | strip_html | truncate: 100 }}
-        </div>
-      </li>
-    {% endfor %}
-  </ul>
+  <section class="category-section">
+    <h2 class="category-title">学习 · 向上生长</h2>
+    <ul class="post-list">
+      {% assign posts = site.categories['学习'] %}
+      {% for post in posts %}
+        <li class="post-item">
+          <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title }}</a>
+          <span class="post-date">{{ post.date | date: "%Y-%m-%d" }}</span>
+        </li>
+      {% empty %}
+        <li class="empty-msg">暂无学习笔记，快去搬砖...</li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <section class="category-section">
+    <h2 class="category-title" style="color: #27ae60; border-bottom-color: #2ecc71;">生活 · 烟火人间</h2>
+    <ul class="post-list">
+      {% assign posts = site.categories['生活'] %}
+      {% for post in posts %}
+        <li class="post-item">
+          <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title }}</a>
+          <span class="post-date">{{ post.date | date: "%Y-%m-%d" }}</span>
+        </li>
+      {% empty %}
+        <li class="empty-msg">日子平淡，还没留下痕迹...</li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <section class="category-section">
+    <h2 class="category-title" style="color: #8e44ad; border-bottom-color: #9b59b6;">游戏 · 虚拟现实</h2>
+    <ul class="post-list">
+      {% assign posts = site.categories['游戏'] %}
+      {% for post in posts %}
+        <li class="post-item">
+          <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title }}</a>
+          <span class="post-date">{{ post.date | date: "%Y-%m-%d" }}</span>
+        </li>
+      {% empty %}
+        <li class="empty-msg">还没来得及上线打怪...</li>
+      {% endfor %}
+    </ul>
+  </section>
 </div>
