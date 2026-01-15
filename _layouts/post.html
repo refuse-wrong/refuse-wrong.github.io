@@ -1,22 +1,82 @@
 ---
 layout: default
 ---
-<div class="post">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+
+<style>
+  /* 响应式布局容器 */
+  .post-container {
+    max-width: 800px; /* 电脑端最大宽度 */
+    margin: 40px auto;
+    padding: 0 25px;
+    background: #ffffff;
+    font-family: 'Noto Serif SC', serif; /* 设置正文字体 */
+    color: #333;
+    line-height: 1.8;
+  }
+
+  /* 标题样式 */
+  .post-header {
+    margin-bottom: 50px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+  }
+
+  .post-title {
+    font-family: 'ZCOOL XiaoWei', serif; /* 设置标题字体 */
+    font-size: 2.6rem;
+    color: #2c3e50;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+  }
+
+  .post-meta {
+    color: #999;
+    font-size: 0.95rem;
+  }
+
+  /* 正文排版 */
+  .post-content {
+    font-size: 1.15rem;
+    text-align: justify; /* 文字两端对齐 */
+  }
+
+  /* 响应式：针对移动端（手机）的调整 */
+  @media (max-width: 600px) {
+    .post-container {
+      margin: 15px auto;
+      padding: 0 15px;
+    }
+    .post-title {
+      font-size: 1.8rem;
+    }
+    .post-content {
+      font-size: 1.05rem;
+    }
+  }
+
+  /* 评论区样式 */
+  .comments-wrapper {
+    margin-top: 70px;
+    padding-top: 30px;
+  }
+</style>
+
+<div class="post-container">
   <header class="post-header">
     <h1 class="post-title">{{ page.title | escape }}</h1>
-    <p class="post-meta">
-      <time datetime="{{ page.date | date_to_xmlschema }}">
-        {{ page.date | date: "%Y年 %m月 %d日" }}
-      </time>
-    </p>
+    <div class="post-meta">
+      发布于 {{ page.date | date: "%Y年 %m月 %d日" }}
+    </div>
   </header>
 
   <article class="post-content">
     {{ content }}
   </article>
 
-  <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee;">
-    <h3 style="margin-bottom: 20px;">💬 评论互动</h3>
+  <div class="comments-wrapper">
+    <h3 style="font-family: 'ZCOOL XiaoWei', serif; color: #555; margin-bottom: 20px;">💬 评论互动</h3>
     
     <script src="https://giscus.app/client.js"
             data-repo="refuse-wrong/refuse-wrong.github.io"
