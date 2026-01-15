@@ -1,0 +1,7 @@
+title: Refuse Wrong 的随笔
+description: 拒绝平庸，记录成长的每一天。
+theme: minima
+remote_theme: jekyll/minima
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
