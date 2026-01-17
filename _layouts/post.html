@@ -42,7 +42,40 @@ layout: default
     text-align: justify; /* 文字两端对齐 */
   }
 
-  /* 响应式：针对移动端（手机）的调整 */
+  /* ========== 核心修复：代码块样式 ========== */
+  /* 多行代码框 (Markdown 中的 ``` ) */
+  .post-content pre {
+    background: #f6f8fa;     /* 浅灰色背景 */
+    padding: 16px;
+    overflow: auto;          /* 超出长度显示滚动条 */
+    border-radius: 8px;      /* 圆角 */
+    border: 1px solid #e1e4e8;
+    line-height: 1.45;
+    margin: 20px 0;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  }
+
+  /* 代码块内的文字 */
+  .post-content pre code {
+    background: transparent; /* 去掉背景重叠 */
+    padding: 0;
+    font-size: 0.95rem;
+    color: #24292e;
+    word-break: normal;
+    white-space: pre;        /* 保持空格和换行 */
+  }
+
+  /* 行内小代码 (Markdown 中的 ` ` ) */
+  .post-content :not(pre) > code {
+    background-color: rgba(175, 184, 193, 0.2);
+    padding: 0.2em 0.4em;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 85%;
+  }
+  /* ======================================== */
+
+  /* 响应式：针对移动端 */
   @media (max-width: 600px) {
     .post-container {
       margin: 15px auto;
@@ -53,6 +86,10 @@ layout: default
     }
     .post-content {
       font-size: 1.05rem;
+    }
+    .post-content pre {
+      padding: 12px;
+      font-size: 0.85rem; /* 手机端代码缩小一点 */
     }
   }
 
