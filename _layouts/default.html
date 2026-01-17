@@ -3,19 +3,123 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ page.title }}</title>
+  <title>{{ page.title }} | Refuse Wrong</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <style>
+    /* 移除 body 默认间距 */
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    /* 1. 导航栏：沉浸式毛玻璃 */
+    .site-nav {
+      padding: 15px 30px;
+      background: rgba(255, 255, 255, 0.1); 
+      backdrop-filter: blur(10px);         
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+      position: sticky; 
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: flex-start;
+    }
+
+    .site-nav a {
+      text-decoration: none;
+      color: #2c3e50;
+      font-family: 'ZCOOL XiaoWei', serif;
+      font-size: 1.1rem;
+      transition: opacity 0.3s;
+    }
+
+    .site-nav a:hover { opacity: 0.7; }
+
+    /* 2. 极简社交矩阵 (右侧固定) */
+    .social-matrix {
+      position: fixed;
+      right: 30px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      z-index: 100;
+    }
+
+    .social-icon {
+      font-size: 22px;
+      color: rgba(44, 62, 80, 0.5); /* 初始颜色较淡，不干扰阅读 */
+      transition: all 0.3s ease;
+      text-decoration: none;
+      background: rgba(255, 255, 255, 0.3);
+      width: 42px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      backdrop-filter: blur(5px);
+    }
+
+    .social-icon:hover {
+      color: #e67e22;
+      transform: scale(1.1) translateX(-5px); /* 悬停微动 */
+      background: rgba(255, 255, 255, 0.8);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    /* 3. 看板娘容器适配 */
+    #live2d-widget {
+      position: fixed;
+      left: 10px;
+      bottom: -10px; /* 微调位置防止遮挡太严重 */
+      z-index: 99;
+    }
+
+    /* 底部样式 */
+    .site-footer {
+      margin-top: 80px;
+      padding: 40px 20px;
+      text-align: center;
+      color: #7f8c8d;
+      font-family: 'Noto Serif SC', serif;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    /* 响应式：窄屏隐藏装饰，优先保证阅读 */
+    @media (max-width: 1100px) {
+      .social-matrix, #live2d-widget {
+        display: none !important;
+      }
+    }
+  </style>
 </head>
 <body>
-  <nav style="padding: 20px; border-bottom: 1px solid #eee;">
-    <a href="/">🏠 首页</a>
+
+  <nav class="site-nav">
+    <a href="{{ '/' | relative_url }}">🏠 首页</a>
   </nav>
+
+  <aside class="social-matrix">
+    <a href="https://github.com/refuse-wrong" class="social-icon" title="GitHub" target="_blank"><i class="fab fa-github"></i></a>
+    <a href="#" class="social-icon" title="知乎" target="_blank"><i class="fab fa-zhihu"></i></a>
+    <a href="mailto:your-email@example.com" class="social-icon" title="邮件"><i class="fas fa-envelope"></i></a>
+  </aside>
 
   <main>
     {{ content }}
   </main>
 
-  <footer style="margin-top: 50px; text-align: center; color: #888;">
-    <p>&copy; {{ site.time | date: '%Y' }} Refuse Wrong</p>
+  <footer class="site-footer">
+    <p>&copy; {{ site.time | date: '%Y' }} Refuse Wrong. Powered by Jekyll.</p>
   </footer>
+
+  <script src="https://fastly.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/autoload.js"></script>
+
 </body>
 </html>

@@ -3,46 +3,246 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home</title>
+  <title>Home | Refuse Wrong</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <style>
+    /* 移除 body 默认间距 */
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    /* 1. 导航栏：沉浸式毛玻璃 */
+    .site-nav {
+      padding: 15px 30px;
+      background: rgba(255, 255, 255, 0.1); 
+      backdrop-filter: blur(10px);         
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+      position: sticky; 
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: flex-start;
+    }
+
+    .site-nav a {
+      text-decoration: none;
+      color: #2c3e50;
+      font-family: 'ZCOOL XiaoWei', serif;
+      font-size: 1.1rem;
+      transition: opacity 0.3s;
+    }
+
+    .site-nav a:hover { opacity: 0.7; }
+
+    /* 2. 极简社交矩阵 (右侧固定) */
+    .social-matrix {
+      position: fixed;
+      right: 30px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      z-index: 100;
+    }
+
+    .social-icon {
+      font-size: 22px;
+      color: rgba(44, 62, 80, 0.5); /* 初始颜色较淡，不干扰阅读 */
+      transition: all 0.3s ease;
+      text-decoration: none;
+      background: rgba(255, 255, 255, 0.3);
+      width: 42px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      backdrop-filter: blur(5px);
+    }
+
+    .social-icon:hover {
+      color: #e67e22;
+      transform: scale(1.1) translateX(-5px); /* 悬停微动 */
+      background: rgba(255, 255, 255, 0.8);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    /* 3. 看板娘容器适配 */
+    #live2d-widget {
+      position: fixed;
+      left: 10px;
+      bottom: -10px; /* 微调位置防止遮挡太严重 */
+      z-index: 99;
+    }
+
+    /* 底部样式 */
+    .site-footer {
+      margin-top: 80px;
+      padding: 40px 20px;
+      text-align: center;
+      color: #7f8c8d;
+      font-family: 'Noto Serif SC', serif;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    /* 响应式：窄屏隐藏装饰，优先保证阅读 */
+    @media (max-width: 1100px) {
+      .social-matrix, #live2d-widget {
+        display: none !important;
+      }
+    }
+  </style>
 </head>
 <body>
-  <nav style="padding: 20px; border-bottom: 1px solid #eee;">
+
+  <nav class="site-nav">
     <a href="/">🏠 首页</a>
   </nav>
+
+  <aside class="social-matrix">
+    <a href="https://github.com/refuse-wrong" class="social-icon" title="GitHub" target="_blank"><i class="fab fa-github"></i></a>
+    <a href="#" class="social-icon" title="知乎" target="_blank"><i class="fab fa-zhihu"></i></a>
+    <a href="mailto:your-email@example.com" class="social-icon" title="邮件"><i class="fas fa-envelope"></i></a>
+  </aside>
 
   <main>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
 
 <style>
-  .home-container { max-width: 800px; margin: 40px auto; padding: 0 20px; font-family: 'Noto Serif SC', serif; }
+  /* 全局基础设置 */
+  body { 
+    margin: 0;
+    /* 新增背景图片样式 */
+    background-image: url('/assets/images/wallhaven.jpg'); /* 替换为你的图片URL */
+    background-size: cover; /* 覆盖整个背景 */
+    background-position: center; /* 图片居中 */
+    background-attachment: fixed; /* 背景固定，滚动时内容在图上移动 */
+    background-repeat: no-repeat; /* 不重复 */
+    background-color: #f8f9fa; /* 背景图片加载失败时的备用颜色 */
+  }
+
+  /* 添加背景遮罩层，让内容更清晰 */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.01); /* 半透明白色遮罩，可调整透明度 */
+    backdrop-filter: blur(5px); /* 略微模糊背景图，使其不那么抢眼 */
+    z-index: -1; /* 确保遮罩在内容下方 */
+  }
+
+  .home-container { 
+    max-width: 850px; 
+    margin: 40px auto; 
+    padding: 40px; 
+    background: rgba(255, 255, 255, 0.9); /* 内容容器的背景也略微透明化 */
+    font-family: 'Noto Serif SC', serif;
+    border-radius: 16px; 
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05); 
+    position: relative; /* 确保内容在遮罩之上 */
+    z-index: 0;
+  }
+
+  /* 标题特效 */
   .home-header { text-align: center; margin-bottom: 60px; }
-  .home-header h1 { font-family: 'ZCOOL XiaoWei', serif; font-size: 3rem; color: #2c3e50; }
-  
-  .category-section { margin-bottom: 50px; }
+  .home-header h1 { 
+    font-family: 'ZCOOL XiaoWei', serif; 
+    font-size: 3.5rem; 
+    color: #2c3e50;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+  }
+  .home-header p { color: #7f8c8d; font-size: 1.1rem; }
+
+  /* 分区动画 */
+  .category-section { 
+    margin-bottom: 50px; 
+    animation: slideIn 0.8s ease-out; 
+  }
+
   .category-title { 
     font-family: 'ZCOOL XiaoWei', serif; 
     font-size: 1.8rem; 
-    color: #e67e22; 
-    border-bottom: 2px solid #f39c12;
-    padding-bottom: 5px;
-    margin-bottom: 20px;
+    padding-left: 15px;
+    border-left: 6px solid #e67e22; 
+    margin-bottom: 25px;
     display: flex;
     align-items: center;
+    color: #2c3e50;
   }
 
+  /* 文章列表样式升级 */
   .post-list { list-style: none; padding: 0; }
+  
   .post-item { 
     display: flex; 
     justify-content: space-between; 
-    align-items: baseline;
-    margin-bottom: 15px; 
-    padding: 8px 0;
-    border-bottom: 1px inset #f9f9f9;
+    align-items: center;
+    margin-bottom: 12px; 
+    padding: 12px 18px;
+    border-radius: 8px;
+    background: transparent;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); 
+    border: 1px solid #f1f1f1;
   }
-  .post-link { text-decoration: none; color: #34495e; font-size: 1.1rem; transition: 0.2s; }
-  .post-link:hover { color: #e67e22; padding-left: 5px; }
-  .post-date { color: #bdc3c7; font-size: 0.85rem; }
-  .empty-msg { color: #ccc; font-style: italic; font-size: 0.9rem; list-style: none; }
+
+  /* 悬停特效：浮起、阴影、改变背景色 */
+  .post-item:hover { 
+    transform: translateX(5px); 
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    border-color: #ddd;
+  }
+
+  .post-link { 
+    text-decoration: none; 
+    color: #34495e; 
+    font-size: 1.1rem; 
+    font-weight: 400;
+  }
+  
+  .post-item:hover .post-link { color: #e67e22; }
+
+  .post-date { 
+    color: #bdc3c7; 
+    font-size: 0.85rem; 
+    font-family: monospace; 
+  }
+
+  /* 空白提示样式 */
+  .empty-msg { 
+    color: #bdc3c7; 
+    padding: 20px;
+    text-align: center;
+    border: 1px dashed #eee;
+    border-radius: 8px;
+    list-style: none;
+  }
+
+  /* 入场动画定义 */
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* 为不同分类定制色彩 */
+  .study-section .category-title { border-left-color: #e67e22; color: #d35400; }
+  .study-section .post-item:hover .post-link { color: #e67e22; }
+
+  .life-section .category-title { border-left-color: #27ae60; color: #1e8449; }
+  .life-section .post-item:hover .post-link { color: #27ae60; }
+
+  .game-section .category-title { border-left-color: #8e44ad; color: #6c3483; }
+  .game-section .post-item:hover .post-link { color: #8e44ad; }
 </style>
 
 <div class="home-container">
@@ -51,7 +251,7 @@
     <p>时间轴上的三个平行世界</p>
   </header>
 
-  <section class="category-section">
+  <section class="category-section study-section">
     <h2 class="category-title">📖 学习 · 向上生长</h2>
     <ul class="post-list">
       
@@ -66,8 +266,8 @@
     </ul>
   </section>
 
-  <section class="category-section">
-    <h2 class="category-title" style="color: #27ae60; border-bottom-color: #2ecc71;">🏠 生活 · 烟火人间</h2>
+  <section class="category-section life-section">
+    <h2 class="category-title">🏠 生活 · 烟火人间</h2>
     <ul class="post-list">
       
       
@@ -81,20 +281,23 @@
     </ul>
   </section>
 
-  <section class="category-section">
-    <h2 class="category-title" style="color: #8e44ad; border-bottom-color: #9b59b6;">🎮 游戏 · 虚拟现实</h2>
+  <section class="category-section game-section">
+    <h2 class="category-title">🎮 游戏 · 虚拟现实</h2>
     <ul class="post-list">
       
       
-        <li class="empty-msg">还没来得及上线打怪...</li>
+        <li class="empty-msg">🎮 还没来得及上线打怪...</li>
       
     </ul>
   </section>
 </div>
   </main>
 
-  <footer style="margin-top: 50px; text-align: center; color: #888;">
-    <p>&copy; 2026 Refuse Wrong</p>
+  <footer class="site-footer">
+    <p>&copy; 2026 Refuse Wrong. Powered by Jekyll.</p>
   </footer>
+
+  <script src="https://fastly.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/autoload.js"></script>
+
 </body>
 </html>
