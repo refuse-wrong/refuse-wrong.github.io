@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2026-01-17T12:07:28+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Refuse Wrong 的随笔</title><subtitle>拒绝平庸，记录成长的每一天。</subtitle><entry><title type="html">我的第一篇笔记</title><link href="http://localhost:4000/%E5%AD%A6%E4%B9%A0/2026/01/15/first-day.html" rel="alternate" type="text/html" title="我的第一篇笔记" /><published>2026-01-15T00:00:00+08:00</published><updated>2026-01-15T00:00:00+08:00</updated><id>http://localhost:4000/%E5%AD%A6%E4%B9%A0/2026/01/15/first-day</id><content type="html" xml:base="http://localhost:4000/%E5%AD%A6%E4%B9%A0/2026/01/15/first-day.html"><![CDATA[<h3 id="为什么开始写日记">为什么开始写日记？</h3>
+<p>就想弄一个可以记录学习or生活的，后续将这个网站作为我记录生活和学习笔记的地方，以后也可以在互联网上留下一些东西。
+今天用gemini帮我使用 <strong>Markdown</strong> 和 <strong>Jekyll</strong>做了这么一个网站。
+比起写 HTML，这种方式更简单！虽然是gemini写的，但是流程还是要记录一下的。</p>
+
+<hr />
+<h3 id="搭建流程">搭建流程</h3>
+<h4 id="一搭建一个静态网站">一：搭建一个静态网站</h4>
+<p>参考：<a href="https://zhuanlan.zhihu.com/p/91652100">使用Github做一个完全免费的个人网站</a></p>
+<h4 id="二使用-jekyll-自动生成笔记">二：使用 <a href="https://jekyllcn.com/docs/home/">Jekyll</a> 自动生成笔记</h4>
+<h5 id="搭建-jekyll-基础结构">搭建 Jekyll 基础结构</h5>
+<ol>
+  <li>创建配置文件 _config.yml
+ 这个文件是网站的“大脑”，决定了网站的名字和使用的皮肤。
+    <ul>
+      <li>在你的仓库根目录下新建文件，命名为 _config.yml。</li>
+      <li>输入以下内容并保存：</li>
+    </ul>
+
+    <pre><code class="language-YAML">  title: Refuse Wrong 的随笔
+  description: 拒绝平庸，记录成长的每一天。
+  remote_theme: jekyll/minima
+  plugins:
+    - jekyll-feed
+    - jekyll-seo-tag
+</code></pre>
+  </li>
+  <li>修改首页 index.html
+为了让 Jekyll 自动列出你的笔记，我们需要把首页改造成一个“自动提取器”。
+    <ul>
+      <li>清空你之前的 index.html，改为以下代码：
+        <pre><code class="language-HTML"> ---
+ layout: home
+ ---
+</code></pre>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<h5 id="写-markdown-内容">写 Markdown 内容</h5>
+<ol>
+  <li>新建 _posts 文件夹
+    <ul>
+      <li>在仓库根目录创建一个新文件夹，命名为 _posts（必须带下划线，且拼写准确）。</li>
+    </ul>
+  </li>
+  <li>创建笔记文件
+    <ul>
+      <li>在 _posts 文件夹里新建文件。</li>
+      <li>文件名格式要求极严： 年-月-日-标题.md。</li>
+      <li>例如：2026-01-15-hello-world.md</li>
+    </ul>
+  </li>
+  <li>编写内容</li>
+</ol>
+
+<h4 id="三加入评论系统可选">三：加入评论系统（可选）</h4>
+<h5 id="开启仓库的-discussions-功能">开启仓库的 Discussions 功能</h5>
+<ol>
+  <li>在你的 GitHub 仓库页面，点击顶部的 Settings（设置）。</li>
+  <li>在左侧菜单选 General。</li>
+  <li>向下滑动找到 Features 区块，勾选 Discussions。
+    <blockquote>
+      <p><em>你会发现仓库顶部多了一个“Discussions”选项卡，这说明开启成功。</em></p>
+    </blockquote>
+  </li>
+</ol>
+
+<h5 id="安装并配置-giscus-权限">安装并配置 Giscus 权限</h5>
+<ol>
+  <li>访问 <a href="giscus.app/zh-CN">giscus.app/zh-CN</a>。</li>
+  <li>在“仓库”配置栏，输入你的仓库全名：xxx/xxx.github.io
+    <ul>
+      <li>该仓库是公开的，否则访客将无法查看 discussion。</li>
+      <li>确保 Discussions 功能已在你的仓库中启用。</li>
+      <li>需要安装 Giscus 到该仓库，点击链接按提示授权即可（选“Only select repositories”并选中你的这个仓库）。</li>
+    </ul>
+  </li>
+  <li>配置选项（推荐）：
+    <ul>
+      <li>页面 ↔️ discussion 映射关系：选择“Discussion 的标题包含页面的 pathname”。</li>
+      <li>Discussion 分类：announcements</li>
+      <li>特性：勾选“将评论框放在评论上方”、“懒加载评论”</li>
+    </ul>
+  </li>
+  <li>获取代码： 配置完成后，页面下方会自动生成一段类似下面的 &lt;script&gt; 代码，复制它。</li>
+</ol>
+
+<h5 id="将评论框嵌入-jekyll-笔记页面">将评论框嵌入 Jekyll 笔记页面</h5>
+<p>由于现在使用的是 Jekyll 自动生成的 minima 主题，我们需要通过创建一个“补丁文件”来把评论框塞进去。</p>
+<ol>
+  <li>在你的仓库根目录新建文件夹：_layouts（必须带下划线）。</li>
+  <li>在 _layouts 文件夹内新建一个文件，命名为 post.html。</li>
+  <li>在这个文件中粘贴以下代码（注意替换脚本部分为你刚才在官网生成的）：</li>
+</ol>
+
+<pre><code class="language-HTML">---
+layout: default
+---
+*** 原始部分 ***
+&lt;div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee;"&gt;
+   &lt;h3 style="margin-bottom: 20px;"&gt;💬 评论互动&lt;/h3&gt;
+   *** Giscus生成部分 ***
+   &lt;script src="https://giscus.app/client.js"
+            data-repo="[ENTER REPO HERE]"
+            data-repo-id="[ENTER REPO ID HERE]"
+            data-category="[ENTER CATEGORY NAME HERE]"
+            data-category-id="[ENTER CATEGORY ID HERE]"
+            data-mapping="pathname"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="top"
+            data-theme="light"
+            data-lang="zh-CN"
+            data-loading="lazy"
+            crossorigin="anonymous"
+            async&gt;
+   &lt;/script&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+<h4 id="优化布局风格可选">优化布局风格（可选）</h4>
+<p>这部分还在探索中</p>
+
+<hr />
+<h3 id="今日感悟">今日感悟</h3>
+<ul>
+  <li>坚持学习很难，但成果很甜。</li>
+  <li>代码不需要完美，但逻辑必须清晰。
+    <blockquote>
+      <p>只要开始，就不算晚。</p>
+    </blockquote>
+  </li>
+</ul>
+
+<p>Gemini的感悟确实很有道理，还得学啊！</p>]]></content><author><name></name></author><category term="学习" /><summary type="html"><![CDATA[为什么开始写日记？ 就想弄一个可以记录学习or生活的，后续将这个网站作为我记录生活和学习笔记的地方，以后也可以在互联网上留下一些东西。 今天用gemini帮我使用 Markdown 和 Jekyll做了这么一个网站。 比起写 HTML，这种方式更简单！虽然是gemini写的，但是流程还是要记录一下的。]]></summary></entry><entry><title type="html">见对象家长准备</title><link href="http://localhost:4000/%E7%94%9F%E6%B4%BB/2026/01/15/daily.html" rel="alternate" type="text/html" title="见对象家长准备" /><published>2026-01-15T00:00:00+08:00</published><updated>2026-01-15T00:00:00+08:00</updated><id>http://localhost:4000/%E7%94%9F%E6%B4%BB/2026/01/15/daily</id><content type="html" xml:base="http://localhost:4000/%E7%94%9F%E6%B4%BB/2026/01/15/daily.html"><![CDATA[<h3 id="1见面礼物准备">1.见面礼物准备</h3>
+<h3 id="-送礼采购清单">🎁 送礼采购清单</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">序号</th>
+      <th style="text-align: left">物品名称</th>
+      <th style="text-align: left">规格/对象</th>
+      <th style="text-align: left">参考单价 (人民币)</th>
+      <th style="text-align: left">小计 (估算)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">1</td>
+      <td style="text-align: left"><strong>茅台</strong></td>
+      <td style="text-align: left">53度飞天 (500ml) × 2</td>
+      <td style="text-align: left">¥1499</td>
+      <td style="text-align: left">¥3000</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">2</td>
+      <td style="text-align: left"><strong>中华香烟</strong></td>
+      <td style="text-align: left">软中华 × 2条</td>
+      <td style="text-align: left">¥1000</td>
+      <td style="text-align: left">¥2000</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">3</td>
+      <td style="text-align: left"><strong>茶叶</strong></td>
+      <td style="text-align: left">有机红茶 × 2</td>
+      <td style="text-align: left">¥150</td>
+      <td style="text-align: left">¥300</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">4</td>
+      <td style="text-align: left"><strong>香水</strong></td>
+      <td style="text-align: left">祖玛珑 (对象妈)</td>
+      <td style="text-align: left">¥1000</td>
+      <td style="text-align: left">¥1,000</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">5</td>
+      <td style="text-align: left"><strong>剃须刀</strong></td>
+      <td style="text-align: left">飞科 (对象爸)</td>
+      <td style="text-align: left">¥300</td>
+      <td style="text-align: left">¥300</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">6</td>
+      <td style="text-align: left"><strong>包</strong></td>
+      <td style="text-align: left">品牌待定 (对象)</td>
+      <td style="text-align: left">¥500</td>
+      <td style="text-align: left">¥500</td>
+    </tr>
+  </tbody>
+</table>]]></content><author><name></name></author><category term="生活" /><summary type="html"><![CDATA[1.见面礼物准备 🎁 送礼采购清单]]></summary></entry></feed>
