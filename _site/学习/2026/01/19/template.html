@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>template | Refuse Wrong</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <style>
+    /* 移除 body 默认间距 */
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    /* 1. 导航栏：沉浸式毛玻璃 */
+    .site-nav {
+      padding: 15px 30px;
+      background: rgba(255, 255, 255, 0.1); 
+      backdrop-filter: blur(10px);         
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+      position: sticky; 
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: flex-start;
+    }
+
+    .site-nav a {
+      text-decoration: none;
+      color: #2c3e50;
+      font-family: 'ZCOOL XiaoWei', serif;
+      font-size: 1.1rem;
+      transition: opacity 0.3s;
+    }
+
+    .site-nav a:hover { opacity: 0.7; }
+
+    /* 2. 极简社交矩阵 (右侧固定) */
+    .social-matrix {
+      position: fixed;
+      right: 30px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      z-index: 100;
+    }
+
+    .social-icon {
+      font-size: 22px;
+      color: rgba(44, 62, 80, 0.5); /* 初始颜色较淡，不干扰阅读 */
+      transition: all 0.3s ease;
+      text-decoration: none;
+      background: rgba(255, 255, 255, 0.3);
+      width: 42px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      backdrop-filter: blur(5px);
+    }
+
+    .social-icon:hover {
+      color: #e67e22;
+      transform: scale(1.1) translateX(-5px); /* 悬停微动 */
+      background: rgba(255, 255, 255, 0.8);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    /* 3. 看板娘容器适配 */
+    #live2d-widget {
+      position: fixed;
+      left: 10px;
+      bottom: -10px; /* 微调位置防止遮挡太严重 */
+      z-index: 99;
+    }
+
+    /* 底部样式 */
+    .site-footer {
+      margin-top: 80px;
+      padding: 40px 20px;
+      text-align: center;
+      color: #7f8c8d;
+      font-family: 'Noto Serif SC', serif;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    /* 响应式：窄屏隐藏装饰，优先保证阅读 */
+    @media (max-width: 1100px) {
+      .social-matrix, #live2d-widget {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="site-nav">
+    <a href="/">🏠 首页</a>
+  </nav>
+
+  <aside class="social-matrix">
+    <a href="https://github.com/refuse-wrong" class="social-icon" title="GitHub" target="_blank"><i class="fab fa-github"></i></a>
+    <a href="https://www.douyin.com/user/MS4wLjABAAAA8mEPqO35J9NkASoc7aMvH_15zeydXyYmonV-QzRNSso?from_tab_name=main" class="social-icon" title="抖音" target="_blank"><i class="fab fa-tiktok"></i></a>
+    <a href="mailto:1473176192@qq.com" class="social-icon" title="邮件"><i class="fas fa-envelope"></i></a>
+  </aside>
+
+  <main>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+
+<style>
+  /* 全局背景设置 - 与首页保持一致 */
+  body { 
+    margin: 0;
+    /* 请确保这里的 URL 与 index.html 中的图片一致 */
+    background-image: url('/assets/images/wallhaven.jpg'); /* 替换为你的图片URL */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+  }
+
+  /* 背景遮罩层 */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(255, 255, 255, 0.01); /* 半透明白色层 */
+    backdrop-filter: blur(5px); /* 背景模糊 */
+    z-index: -1;
+  }
+
+  /* 响应式布局容器 - 增加半透明感 */
+  .post-container {
+    max-width: 850px; /* 稍微调宽一点点，更有呼吸感 */
+    margin: 40px auto;
+    padding: 50px; /* 增加内边距 */
+    background: rgba(255, 255, 255, 0.9); /* 容器半透明 */
+    font-family: 'Noto Serif SC', serif;
+    color: #333;
+    line-height: 1.8;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    position: relative;
+    z-index: 0;
+  }
+
+  /* 标题样式 */
+  .post-header {
+    margin-bottom: 50px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 30px;
+  }
+
+  .post-title {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 3rem;
+    color: #2c3e50;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+  }
+
+  .post-meta {
+    color: #999;
+    font-size: 0.95rem;
+    letter-spacing: 1px;
+  }
+
+  /* 正文排版 */
+  .post-content {
+    font-size: 1.15rem;
+    text-align: justify;
+  }
+
+  /* 代码块样式优化 */
+  .post-content pre {
+    background: #f8f9fa;
+    padding: 20px;
+    overflow: auto;
+    border-radius: 12px;
+    border: 1px solid #eaedf0;
+    line-height: 1.5;
+    margin: 30px 0;
+    font-family: "SFMono-Regular", Consolas, monospace;
+    box-shadow: inset 0 1px 5px rgba(0,0,0,0.02);
+  }
+
+  .post-content pre code {
+    background: transparent;
+    padding: 0;
+    font-size: 0.95rem;
+    color: #24292e;
+    white-space: pre;
+  }
+
+  /* 行内代码 */
+  .post-content :not(pre) > code {
+    background-color: rgba(230, 126, 34, 0.1); /* 淡淡的橙色背景，呼应主题 */
+    color: #e67e22;
+    padding: 0.2em 0.4em;
+    border-radius: 4px;
+    font-size: 90%;
+  }
+
+  /* 响应式：针对移动端 */
+  @media (max-width: 600px) {
+    .post-container {
+      margin: 10px auto;
+      padding: 20px;
+      border-radius: 0; /* 手机端取消圆角，节省空间 */
+    }
+    .post-title { font-size: 2rem; }
+    .post-content { font-size: 1.1rem; }
+  }
+
+  .comments-wrapper {
+    margin-top: 80px;
+    padding-top: 40px;
+    border-top: 2px dashed #eee;
+  }
+</style>
+
+<div class="post-container">
+  <header class="post-header">
+    <h1 class="post-title">template</h1>
+    <div class="post-meta">
+      📅 发布于 2026年 01月 19日
+    </div>
+  </header>
+
+  <article class="post-content">
+    <h1 id="模板">模板</h1>
+<p>内容</p>
+
+  </article>
+
+  <div class="comments-wrapper">
+    <h3 style="font-family: 'ZCOOL XiaoWei', serif; color: #2c3e50; margin-bottom: 30px; display: flex; align-items: center;">
+      <span style="margin-right: 10px;">💬</span> 评论互动
+    </h3>
+    
+    <script src="https://giscus.app/client.js"
+            data-repo="refuse-wrong/refuse-wrong.github.io"
+            data-repo-id="R_kgDOQ6RRWg"
+            data-category="Announcements"
+            data-category-id="DIC_kwDOQ6RRWs4C0-6k"
+            data-mapping="pathname"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="top"
+            data-theme="light"
+            data-lang="zh-CN"
+            data-loading="lazy"
+            crossorigin="anonymous"
+            async>
+    </script>
+  </div>
+</div>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 Refuse Wrong. Powered by Jekyll.</p>
+  </footer>
+
+  <script src="https://fastly.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/autoload.js"></script>
+
+</body>
+</html>
