@@ -9,92 +9,82 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
   <style>
-    /* 移除 body 默认间距 */
-    body {
-      margin: 0;
-      padding: 0;
-    }
+    body { margin: 0; padding: 0; }
 
-    /* 1. 导航栏：沉浸式毛玻璃 */
+    /* 1. 导航栏 */
     .site-nav {
-      padding: 12px 40px; /* 增加左右内边距 */
+      padding: 12px 40px;
       background: rgba(255, 255, 255, 0.1); 
       backdrop-filter: blur(10px);         
       -webkit-backdrop-filter: blur(10px);
       border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
-      position: sticky; 
-      top: 0;
-      z-index: 1000;
-      /* 关键：使用 flex 布局实现两端对齐 */
-      display: flex;
-      justify-content: space-between; 
-      align-items: center;
+      position: sticky; top: 0; z-index: 1000;
+      display: flex; justify-content: space-between; align-items: center;
     }
 
     .site-nav a.nav-link {
+      text-decoration: none; color: #2c3e50; font-family: 'ZCOOL XiaoWei', serif;
+      font-size: 1.1rem; transition: opacity 0.3s;
+    }
+
+    .nav-right-zone { display: flex; align-items: center; gap: 20px; }
+
+    /* 2. 搜索框与下拉结果容器 */
+    .search-container { position: relative; }
+
+    .search-box {
+      display: flex; align-items: center;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 20px; padding: 5px 15px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .search-input {
+      background: none; border: none; outline: none;
+      width: 150px; font-size: 0.9rem; color: #2c3e50;
+    }
+
+    /* 搜索结果下拉列表 */
+    #search-results {
+      position: absolute;
+      top: 120%; right: 0;
+      width: 250px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      max-height: 300px;
+      overflow-y: auto;
+      display: none; /* 默认隐藏 */
+      z-index: 1001;
+      border: 1px solid #eee;
+    }
+
+    .result-item {
+      padding: 12px 15px;
+      display: block;
       text-decoration: none;
-      color: #2c3e50;
-      font-family: 'ZCOOL XiaoWei', serif;
-      font-size: 1.1rem;
-      transition: opacity 0.3s;
+      color: #34495e;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 0.9rem;
+      transition: background 0.2s;
     }
 
-    .site-nav a.nav-link:hover { opacity: 0.7; }
+    .result-item:hover { background: rgba(230, 126, 34, 0.1); color: #e67e22; }
+    .result-item:last-child { border-bottom: none; }
+    .result-meta { font-size: 0.75rem; color: #95a5a6; display: block; margin-top: 4px; }
 
-    /* 2. 社交矩阵：移动到导航栏内部并横向排列 */
-    .social-matrix {
-      display: flex;
-      flex-direction: row; /* 横向排列 */
-      gap: 15px;           /* 图标间距 */
-      align-items: center;
-    }
-
+    /* 社交矩阵 */
+    .social-matrix { display: flex; gap: 12px; align-items: center; }
     .social-icon {
-      font-size: 18px; 
-      color: rgba(44, 62, 80, 0.6);
-      transition: all 0.3s ease;
-      text-decoration: none;
-      background: rgba(255, 255, 255, 0.3);
-      width: 36px;
-      height: 36px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      backdrop-filter: blur(5px);
+      font-size: 18px; color: rgba(44, 62, 80, 0.6);
+      text-decoration: none; background: rgba(255, 255, 255, 0.3);
+      width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+      border-radius: 50%; transition: all 0.3s ease;
     }
+    .social-icon:hover { color: #e67e22; background: rgba(255, 255, 255, 0.8); transform: translateY(-2px); }
 
-    .social-icon:hover {
-      color: #e67e22;
-      transform: translateY(-2px);
-      background: rgba(255, 255, 255, 0.8);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-
-    /* 3. 看板娘容器适配 */
-    #live2d-widget {
-      position: fixed;
-      left: 10px;
-      bottom: -10px;
-      z-index: 99;
-    }
-
-    /* 底部样式 */
-    .site-footer {
-      margin-top: 80px;
-      padding: 40px 20px;
-      text-align: center;
-      color: #7f8c8d;
-      font-family: 'Noto Serif SC', serif;
-      background: rgba(255, 255, 255, 0.05);
-    }
-
-    /* 响应式调整 */
-    @media (max-width: 600px) {
-      .site-nav { padding: 10px 20px; }
-      .social-matrix { gap: 10px; }
-      .social-icon { width: 32px; height: 32px; font-size: 16px; }
-    }
+    @media (max-width: 600px) { .search-input { width: 80px; } #search-results { width: 200px; } }
   </style>
 </head>
 <body>
@@ -102,28 +92,101 @@
   <nav class="site-nav">
     <a href="{{ '/' | relative_url }}" class="nav-link">🏠 首页</a>
 
-    <div class="social-matrix">
-      <a href="https://github.com/refuse-wrong" class="social-icon" title="GitHub" target="_blank">
-        <i class="fab fa-github"></i>
-      </a>
-      <a href="https://www.douyin.com/user/MS4wLjABAAAA8mEPqO35J9NkASoc7aMvH_15zeydXyYmonV-QzRNSso?from_tab_name=main" class="social-icon" title="抖音" target="_blank">
-        <i class="fab fa-tiktok"></i>
-      </a>
-      <a href="mailto:1473176192@qq.com" class="social-icon" title="邮件">
-        <i class="fas fa-envelope"></i>
-      </a>
+    <div class="nav-right-zone">
+      <div class="search-container">
+        <div class="search-box">
+          <input type="text" id="search-input" class="search-input" placeholder="输入关键词..." autocomplete="off">
+          <i class="fas fa-search" style="color: #7f8c8d; font-size: 0.8rem;"></i>
+        </div>
+        <div id="search-results"></div>
+      </div>
+
+      <div class="social-matrix">
+        <a href="https://github.com/refuse-wrong" class="social-icon" target="_blank"><i class="fab fa-github"></i></a>
+        <a href="https://www.douyin.com/..." class="social-icon" target="_blank"><i class="fab fa-tiktok"></i></a>
+        <a href="mailto:..." class="social-icon"><i class="fas fa-envelope"></i></a>
+      </div>
     </div>
   </nav>
 
-  <main>
-    {{ content }}
-  </main>
+  <main>{{ content }}</main>
 
-  <footer class="site-footer">
-    <p>&copy; {{ site.time | date: '%Y' }} Refuse Wrong. Powered by Jekyll.</p>
-  </footer>
+  <script>
+  let searchData = [];
+  const searchInput = document.getElementById('search-input');
+  const resultsContainer = document.getElementById('search-results');
+
+  // 1. 获取全文索引
+  fetch("{{ '/search.json' | relative_url }}")
+    .then(response => response.json())
+    .then(data => { searchData = data; });
+
+  // 2. 监听输入
+  searchInput.addEventListener('input', function() {
+    const query = this.value.toLowerCase().trim();
+    resultsContainer.innerHTML = ''; 
+
+    if (query.length < 1) {
+      resultsContainer.style.display = 'none';
+      return;
+    }
+
+    // 3. 搜索过滤
+    const matches = searchData.filter(item => 
+      item.title.toLowerCase().includes(query) || 
+      item.content.toLowerCase().includes(query) ||
+      item.category.toLowerCase().includes(query)
+    );
+
+    if (matches.length > 0) {
+      matches.slice(0, 10).forEach(item => { // 显示前10条
+        const div = document.createElement('a');
+        div.href = item.url;
+        div.className = 'result-item';
+
+        // 寻找关键词在正文中的位置，截取上下文
+        let snippet = "";
+        const contentLow = item.content.toLowerCase();
+        const index = contentLow.indexOf(query);
+
+        if (index !== -1) {
+          // 截取关键词前后各 20 个字符
+          const start = Math.max(0, index - 20);
+          const end = Math.min(item.content.length, index + query.length + 40);
+          snippet = (start > 0 ? "..." : "") + 
+                    item.content.substring(start, end) + 
+                    (end < item.content.length ? "..." : "");
+          
+          // 给匹配到的关键词加粗高亮（可选）
+          const reg = new RegExp(`(${query})`, 'gi');
+          snippet = snippet.replace(reg, '<mark style="background:#fff3cd; padding:0 2px;">$1</mark>');
+        } else {
+          snippet = item.content.substring(0, 60) + "...";
+        }
+
+        div.innerHTML = `
+          <strong style="color: #e67e22;">${item.title}</strong>
+          <span class="result-meta" style="font-size: 0.75rem; color: #888; margin-top: 5px; line-height: 1.4;">
+            ${snippet}
+          </span>
+        `;
+        resultsContainer.appendChild(div);
+      });
+      resultsContainer.style.display = 'block';
+    } else {
+      resultsContainer.innerHTML = '<div class="result-item" style="color:#999">未找到包含该关键词的内容</div>';
+      resultsContainer.style.display = 'block';
+    }
+  });
+
+  // 点击空白处关闭
+  document.addEventListener('click', function(e) {
+    if (!searchInput.contains(e.target) && !resultsContainer.contains(e.target)) {
+      resultsContainer.style.display = 'none';
+    }
+  });
+</script>
 
   <script src="https://fastly.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/autoload.js"></script>
-
 </body>
 </html>
