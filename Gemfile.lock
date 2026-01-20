@@ -44,6 +44,8 @@ GEM
       safe_yaml (~> 1.0)
       terminal-table (>= 1.8, < 4.0)
       webrick (~> 1.7)
+    jekyll-archives (2.3.0)
+      jekyll (>= 3.6, < 5.0)
     jekyll-feed (0.17.0)
       jekyll (>= 3.7, < 5.0)
     jekyll-remote-theme (0.4.3)
@@ -96,6 +98,7 @@ PLATFORMS
 
 DEPENDENCIES
   jekyll
+  jekyll-archives
   jekyll-feed
   jekyll-remote-theme
   jekyll-seo-tag
@@ -119,6 +122,7 @@ CHECKSUMS
   http_parser.rb (0.8.1) sha256=9ae8df145b39aa5398b2f90090d651c67bd8e2ebfe4507c966579f641e11097a
   i18n (1.14.8) sha256=285778639134865c5e0f6269e0b818256017e8cde89993fdfcbfb64d088824a5
   jekyll (4.4.1) sha256=4c1144d857a5b2b80d45b8cf5138289579a9f8136aadfa6dd684b31fe2bc18c1
+  jekyll-archives (2.3.0) sha256=2dbd8ce22212fbace81fe2c9aa4152a6e21c748bcc626f135af5acfd813375f6
   jekyll-feed (0.17.0) sha256=689aab16c877949bb9e7a5c436de6278318a51ecb974792232fd94d8b3acfcc3
   jekyll-remote-theme (0.4.3) sha256=d3fde726484fb3df04de9e347baf75aaa3d5bfea771a330412e0c52608e54b40
   jekyll-sass-converter (3.0.0) sha256=e2e7674f186e906b9d99b8066e13f9b4d5cb9f806d36f7bc8cf2610053d8c902

@@ -7,3 +7,10 @@ remote_theme: jekyll/minima
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
+  - jekyll-archives
+
+jekyll-archives:
+  enabled: [categories] # 开启分类自动存档
+  layout: column        # 自动生成的页面使用你写的 column 布局
+  permalinks:
+    category: /columns/:name/ # 路径规则，完美契合你之前的代码

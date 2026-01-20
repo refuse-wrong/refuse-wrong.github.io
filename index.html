@@ -3,22 +3,20 @@ layout: default
 title: Home
 ---
 
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=ZCOOL+XiaoWei&display=swap"
+  rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 <style>
-  /* 全局基础设置 */
-  body { 
+  /* 基础布局 */
+  body {
     margin: 0;
-    /* 新增背景图片样式 */
-    background-image: url('{{ "/assets/images/wallhaven.jpg" | relative_url }}'); /* 替换为你的图片URL */
-    background-size: cover; /* 覆盖整个背景 */
-    background-position: center; /* 图片居中 */
-    background-attachment: fixed; /* 背景固定，滚动时内容在图上移动 */
-    background-repeat: no-repeat; /* 不重复 */
-    background-color: #f8f9fa; /* 背景图片加载失败时的备用颜色 */
+    background-image: url('{{ "/assets/images/wallhaven.jpg" | relative_url }}');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
   }
 
-  /* 添加背景遮罩层，让内容更清晰 */
   body::before {
     content: '';
     position: fixed;
@@ -26,170 +24,376 @@ title: Home
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.01); /* 半透明白色遮罩，可调整透明度 */
-    backdrop-filter: blur(5px); /* 略微模糊背景图，使其不那么抢眼 */
-    z-index: -1; /* 确保遮罩在内容下方 */
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(8px);
+    z-index: -1;
   }
 
-  .home-container { 
-    max-width: 850px; 
-    margin: 40px auto; 
-    padding: 40px; 
-    background: rgba(255, 255, 255, 0.9); /* 内容容器的背景也略微透明化 */
-    font-family: 'Noto Serif SC', serif;
-    border-radius: 16px; 
-    box-shadow: 0 4px 20px rgba(0,0,0,0.05); 
-    position: relative; /* 确保内容在遮罩之上 */
-    z-index: 0;
+  /* 三栏布局容器 */
+  .main-wrapper {
+    display: grid;
+    grid-template-columns: 260px 1fr 280px;
+    gap: 25px;
+    max-width: 1500px;
+    margin: 40px auto;
+    padding: 0 20px;
+    align-items: start;
   }
 
-  /* 标题特效 */
-  .home-header { text-align: center; margin-bottom: 60px; }
-  .home-header h1 { 
-    font-family: 'ZCOOL XiaoWei', serif; 
-    font-size: 3.5rem; 
-    color: #2c3e50;
-    margin-bottom: 10px;
-    letter-spacing: 2px;
-  }
-  .home-header p { color: #7f8c8d; font-size: 1.1rem; }
-
-  /* 分区动画 */
-  .category-section { 
-    margin-bottom: 50px; 
-    animation: slideIn 0.8s ease-out; 
-  }
-
-  .category-title { 
-    font-family: 'ZCOOL XiaoWei', serif; 
-    font-size: 1.8rem; 
-    padding-left: 15px;
-    border-left: 6px solid #e67e22; 
+  /* 侧边栏通用卡片样式 */
+  .side-card {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
     margin-bottom: 25px;
+  }
+
+  .side-title {
+    font-family: 'ZCOOL XiaoWei';
+    font-size: 1.2rem;
+    color: #2c3e50;
+    margin-bottom: 15px;
     display: flex;
     align-items: center;
-    color: #2c3e50;
+    gap: 8px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
   }
 
-  /* 文章列表样式升级 */
-  .post-list { list-style: none; padding: 0; }
-  
-  .post-item { 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center;
-    margin-bottom: 12px; 
-    padding: 12px 18px;
-    border-radius: 8px;
-    background: transparent;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); 
-    border: 1px solid #f1f1f1;
+  /* 中间主容器 */
+  .home-container {
+    background: rgba(255, 255, 255, 0.95);
+    font-family: 'Noto Serif SC', serif;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 40px;
   }
 
-  /* 悬停特效：浮起、阴影、改变背景色 */
-  .post-item:hover { 
-    transform: translateX(5px); 
-    background: #fff;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    border-color: #ddd;
+  /* 侧边栏内容样式 */
+  #hitokoto_text {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: #34495e;
   }
 
-  .post-link { 
-    text-decoration: none; 
-    color: #34495e; 
-    font-size: 1.1rem; 
-    font-weight: 400;
-  }
-  
-  .post-item:hover .post-link { color: #e67e22; }
-
-  .post-date { 
-    color: #bdc3c7; 
-    font-size: 0.85rem; 
-    font-family: monospace; 
-  }
-
-  /* 空白提示样式 */
-  .empty-msg { 
-    color: #bdc3c7; 
-    padding: 20px;
+  .calendar-box {
     text-align: center;
-    border: 1px dashed #eee;
-    border-radius: 8px;
+    padding: 20px 10px;
+  }
+
+  /* 年份行：较小、灰色 */
+  .cal-year {
+    font-size: 1.5rem;
+    color: #7f8c8d;
+    margin-bottom: 5px;
+    font-family: monospace;
+  }
+
+  /* 月日行：大字、橙色、加粗 */
+  .cal-date-main {
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: #e67e22;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+
+  /* 星期行 */
+  .cal-week {
+    font-size: 1rem;
+    color: #95a5a6;
+  }
+
+  .recent-item {
+    display: block;
+    text-decoration: none;
+    padding: 10px 0;
+    border-bottom: 1px dashed #eee;
+  }
+
+  .recent-title {
+    font-size: 0.9rem;
+    color: #2c3e50;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .recent-date {
+    font-size: 0.8rem;
+    color: #ccc;
+  }
+
+  /* 关于我 样式 */
+  .about-me-content {
+    text-align: center;
+  }
+
+  .about-me-content p {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+    line-height: 1.6;
+    margin: 10px 0;
+  }
+
+  /* ----------------------------------------------------------- */
+  /* 原始样式部分 - 增加动态效果而不改变 HTML 结构 */
+  /* ----------------------------------------------------------- */
+  .home-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .home-header h1 {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 3.5rem;
+    color: #2c3e50;
+    margin: 0;
+  }
+
+  .category-section {
+    margin-bottom: 60px;
+  }
+
+  .level-1-title {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 2rem;
+    color: #2c3e50;
+    border-left: 8px solid #e67e22;
+    padding-left: 15px;
+    margin-bottom: 30px;
+  }
+
+  /* 专栏卡片动态效果 */
+  .column-card {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    margin-bottom: 15px;
+    padding: 22px;
+    background: white;
+    border-radius: 12px;
+    border: 1px solid rgba(230, 126, 34, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  .column-card:hover {
+    transform: translateY(-3px) translateX(5px);
+    border-color: #e67e22;
+    box-shadow: 0 5px 15px rgba(230, 126, 34, 0.1);
+  }
+
+  .card-icon {
+    color: #e67e22;
+    font-size: 1.4rem;
+    margin-right: 18px;
+  }
+
+  .card-name {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #34495e;
+    flex: 1;
+  }
+
+  .card-meta {
+    font-size: 0.9rem;
+    color: #95a5a6;
+  }
+
+  /* 散篇列表动态效果：仅通过原有 class 实现 */
+  .post-list {
     list-style: none;
+    padding: 0;
+    margin-top: 10px;
   }
 
-  /* 入场动画定义 */
-  @keyframes slideIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+  .post-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 18px;
+    border-bottom: 1px solid #f0f0f0;
+    transition: all 0.3s ease;
+    /* 关键：平滑过渡 */
   }
 
-  /* 为不同分类定制色彩 */
-  .study-section .category-title { border-left-color: #e67e22; color: #d35400; }
-  .study-section .post-item:hover .post-link { color: #e67e22; }
+  /* 鼠标悬停时的动态反馈 */
+  .post-item:hover {
+    background: rgba(230, 126, 34, 0.03);
+    padding-left: 28px;
+    /* 产生右移感，不改动 transform 以保持稳定 */
+    border-bottom-color: #e67e22;
+  }
 
-  .life-section .category-title { border-left-color: #27ae60; color: #1e8449; }
-  .life-section .post-item:hover .post-link { color: #27ae60; }
+  .post-link {
+    text-decoration: none;
+    color: #555;
+    font-size: 1.05rem;
+    transition: 0.3s;
+  }
 
-  .game-section .category-title { border-left-color: #8e44ad; color: #6c3483; }
-  .game-section .post-item:hover .post-link { color: #8e44ad; }
+  .post-item:hover .post-link {
+    color: #e67e22;
+  }
+
+  /* 悬停时文字变色 */
+
+  .post-date {
+    color: #ccc;
+    font-size: 0.85rem;
+    font-family: monospace;
+  }
+
+  .study-section .level-1-title {
+    border-left-color: #e67e22;
+  }
+
+  .life-section .level-1-title {
+    border-left-color: #27ae60;
+  }
+
+  .game-section .level-1-title {
+    border-left-color: #8e44ad;
+  }
+
+  @media (max-width: 1100px) {
+    .main-wrapper {
+      grid-template-columns: 1fr;
+    }
+  }
 </style>
 
-<div class="home-container">
-  <header class="home-header">
-    <h1>Refuse Wrong</h1>
-    <p>时间轴上的三个平行世界</p>
-  </header>
+<div class="main-wrapper">
 
-  <section class="category-section study-section">
-    <h2 class="category-title">📖 学习 · 向上生长</h2>
-    <ul class="post-list">
-      {% assign posts = site.categories['学习'] %}
-      {% if posts.size > 0 %}
-        {% for post in posts %}
-          <li class="post-item">
-            <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title }}</a>
-            <span class="post-date">{{ post.date | date: "%Y-%m-%d" }}</span>
-          </li>
-        {% endfor %}
-      {% else %}
-        <li class="empty-msg">🌱 暂无学习笔记，快去搬砖...</li>
-      {% endif %}
-    </ul>
-  </section>
+  <aside class="left-sidebar">
+    <div class="side-card">
+      <h3 class="side-title"><i class="fas fa-user-circle"></i> 关于我</h3>
+      <div class="about-me-content">
+        <p>欢迎来到我的个人博客，希望给你带来帮助</p>
+        <img src="{{ '/assets/images/big-white.jpg' | relative_url }}" alt="Avatar"
+          style="width:80px; height:80px; border-radius:50%; margin-top:10px;">
+      </div>
+    </div>
 
-  <section class="category-section life-section">
-    <h2 class="category-title">🏠 生活 · 烟火人间</h2>
-    <ul class="post-list">
-      {% assign posts = site.categories['生活'] %}
-      {% if posts.size > 0 %}
-        {% for post in posts %}
-          <li class="post-item">
-            <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title }}</a>
-            <span class="post-date">{{ post.date | date: "%Y-%m-%d" }}</span>
-          </li>
-        {% endfor %}
-      {% else %}
-        <li class="empty-msg">☕ 日子平淡，还没留下痕迹...</li>
-      {% endif %}
-    </ul>
-  </section>
+    <div class="side-card">
+      <h3 class="side-title"><i class="fas fa-quote-left"></i> 每日一句</h3>
+      <div id="hitokoto">
+        <span id="hitokoto_text">正在加载灵感...</span>
+        <div id="hitokoto_from" style="text-align: right; margin-top: 10px; font-size: 0.8rem; color: #95a5a6;"></div>
+      </div>
+    </div>
+  </aside>
 
-  <section class="category-section game-section">
-    <h2 class="category-title">🎮 游戏 · 虚拟现实</h2>
-    <ul class="post-list">
-      {% assign posts = site.categories['游戏'] %}
-      {% if posts.size > 0 %}
-        {% for post in posts %}
-          <li class="post-item">
-            <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title }}</a>
-            <span class="post-date">{{ post.date | date: "%Y-%m-%d" }}</span>
-          </li>
+  <div class="home-container">
+    <header class="home-header">
+      <h1>Refuse Wrong</h1>
+      <p style="letter-spacing: 2px; color: #7f8c8d;">我们漫游于此，只为在平行的时空里与自己相遇</p>
+    </header>
+
+    {% assign main_categories = "学习,生活,游戏" | split: "," %}
+
+    {% for root_cat in main_categories %}
+    <section
+      class="category-section {% if root_cat == '学习' %}study-section{% elsif root_cat == '生活' %}life-section{% else %}game-section{% endif %}">
+      <h2 class="level-1-title">
+        {% if root_cat == "学习" %}<i class="fas fa-book-reader"></i> 学习 · 向上生长
+        {% elsif root_cat == "生活" %}<i class="fas fa-mug-hot"></i> 生活 · 烟火人间
+        {% else %}<i class="fas fa-gamepad"></i> 游戏 · 虚拟现实{% endif %}
+      </h2>
+
+      {% assign cat_posts = site.categories[root_cat] %}
+
+      {% if cat_posts.size > 0 %}
+      {% assign used_sub_cats = "" %}
+
+      {% comment %} --- 第一步：渲染二级专栏卡片 --- {% endcomment %}
+      {% for post in cat_posts %}
+      {% if post.categories.size >= 2 %}
+      {% assign sub_cat = post.categories[1] %}
+      {% unless used_sub_cats contains sub_cat %}
+      <a href="{{ site.baseurl }}/columns/{{ sub_cat | slugify }}/" class="column-card">
+        <div class="card-icon"><i class="fas fa-box-archive"></i></div>
+        <span class="card-name">{{ sub_cat }}</span>
+        {% assign sub_posts_count = 0 %}
+        {% for p in cat_posts %}
+        {% if p.categories contains sub_cat %}{% assign sub_posts_count = sub_posts_count | plus: 1 %}{% endif %}
         {% endfor %}
-      {% else %}
-        <li class="empty-msg">🎮 还没来得及上线打怪...</li>
+        <span class="card-meta">{{ sub_posts_count }} 篇文章 <i class="fas fa-chevron-right"
+            style="margin-left:8px;"></i></span>
+      </a>
+      {% capture used_sub_cats %}{{ used_sub_cats }} | {{ sub_cat }}{% endcapture %}
+      {% endunless %}
       {% endif %}
-    </ul>
-  </section>
+      {% endfor %}
+
+      {% comment %} --- 第二步：渲染散篇 --- {% endcomment %}
+      <ul class="post-list">
+        {% for post in cat_posts %}
+        {% if post.categories.size == 1 %}
+        <li class="post-item">
+          <a class="post-link" href="{{ post.url | relative_url }}">
+            <i class="far fa-file-alt" style="margin-right:10px; opacity:0.5;"></i>{{ post.title }}
+          </a>
+          <span class="post-date">{{ post.date | date: "%Y-%m-%d" }}</span>
+        </li>
+        {% endif %}
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p style="color: #ccc; font-style: italic; padding-left: 20px;">耕耘中，敬请期待...</p>
+      {% endif %}
+    </section>
+    {% endfor %}
+  </div>
+
+  <aside class="right-sidebar">
+    <div class="side-card calendar-box">
+      <h3 class="side-title"><i class="far fa-calendar-alt"></i> 日历</h3>
+      <div class="cal-year" id="cal-year-val">--</div>
+      <div class="cal-date-main" id="cal-date-val">--</div>
+      <div class="cal-week" id="cal-week-val">--</div>
+    </div>
+
+    <div class="side-card">
+      <h3 class="side-title"><i class="fas fa-history"></i> 近期更新</h3>
+      {% for post in site.posts limit:5 %}
+      <a href="{{ post.url | relative_url }}" class="recent-item">
+        <span class="recent-title">{{ post.title }}</span>
+        <span class="recent-date">{{ post.date | date: "%Y-%m-%d" }}</span>
+      </a>
+      {% endfor %}
+    </div>
+  </aside>
+
 </div>
+
+<script>
+  // 脚本保持不变
+  fetch('https://v1.hitokoto.cn')
+    .then(response => response.json())
+    .then(data => {
+      document.getElementById('hitokoto_text').innerText = data.hitokoto;
+      document.getElementById('hitokoto_from').innerText = '—— ' + (data.from_who || '') + '「' + data.from + '」';
+    });
+
+  function updateCalendar() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth() + 1;
+    const day = now.getDate();
+    const weekDays = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+    
+    // 1. 年份单独放一行
+    document.getElementById('cal-year-val').innerText = `${year}年`;
+
+    // 2. 月日放一行，使用突出的大号橙色字体
+    document.getElementById('cal-date-val').innerText = `${month}月${day}日`;
+
+    // 3. 星期放下面
+    document.getElementById('cal-week-val').innerText = weekDays[now.getDay()];
+  }
+
+  updateCalendar();
+</script>

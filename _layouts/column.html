@@ -1,0 +1,108 @@
+---
+layout: default
+---
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<style>
+  .column-container { 
+    max-width: 800px; margin: 40px auto; padding: 40px; 
+    background: rgba(255, 255, 255, 0.95); border-radius: 20px;
+    font-family: 'Noto Serif SC', serif;
+  }
+  .column-header { text-align: center; margin-bottom: 50px; position: relative; }
+  
+  /* 导航控制：仅保留左侧动态返回键 */
+  .nav-controls { display: flex; align-items: center; margin-bottom: 25px; }
+  .nav-btn { 
+    text-decoration: none; color: #95a5a6; font-size: 0.95rem; 
+    transition: 0.3s; display: flex; align-items: center; gap: 8px;
+    padding: 5px 10px; border-radius: 8px;
+  }
+  .nav-btn:hover { color: #e67e22; background: rgba(230, 126, 34, 0.05); }
+
+  .column-badge { 
+    background: #e67e22; color: white; padding: 5px 15px; 
+    border-radius: 20px; font-size: 0.8rem; display: inline-block; margin-bottom: 10px;
+  }
+  .column-title { font-family: 'ZCOOL XiaoWei'; font-size: 3rem; color: #2c3e50; margin: 10px 0; }
+  
+  /* 子专栏卡片 */
+  .sub-column-card {
+    display: flex; align-items: center; text-decoration: none;
+    padding: 20px; background: white; border: 1px solid #eee;
+    border-radius: 12px; margin-bottom: 15px; transition: 0.3s;
+  }
+  .sub-column-card:hover { transform: translateY(-3px); border-color: #e67e22; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+  .sub-card-name { font-weight: bold; font-size: 1.15rem; color: #34495e; flex: 1; }
+  
+  /* 最终文章列表样式 */
+  .post-item-final {
+    padding: 20px; border: 1px solid #f1f1f1; border-radius: 12px;
+    margin-bottom: 12px; display: block; text-decoration: none; transition: 0.2s;
+    background: white;
+  }
+  .post-item-final:hover { border-color: #e67e22; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+  .post-title-final { color: #2c3e50; font-weight: bold; font-size: 1.2rem; display: block; margin-bottom: 5px; }
+  .post-date-final { color: #bdc3c7; font-size: 0.85rem; display: flex; align-items: center; gap: 5px; }
+</style>
+
+<div class="column-container">
+  {% comment %} 计算层级逻辑 {% endcomment %}
+  {% assign first_post = page.posts | first %}
+  {% assign current_depth = 0 %}
+  {% for cat in first_post.categories %}
+    {% if cat == page.title %}
+      {% assign current_depth = forloop.index0 %}
+      {% break %}
+    {% endif %}
+  {% endfor %}
+
+  {% comment %} 顶部导航：已去掉首页按键 {% endcomment %}
+  <nav class="nav-controls">
+    {% if current_depth > 1 %}
+      {% assign parent_index = current_depth | minus: 1 %}
+      {% assign parent_cat = first_post.categories[parent_index] %}
+      <a href="{{ site.baseurl }}/columns/{{ parent_cat | slugify }}/" class="nav-btn">
+        <i class="fas fa-chevron-left"></i> 返回上级: {{ parent_cat }}
+      </a>
+    {% else %}
+      <a href="{{ site.baseurl }}/" class="nav-btn">
+        <i class="fas fa-chevron-left"></i> 返回首页
+      </a>
+    {% endif %}
+  </nav>
+
+  <header class="column-header">
+    <span class="column-badge"><i class="fas fa-layer-group"></i> 专题专栏</span>
+    <h1 class="column-title">{{ page.title }}</h1>
+    <p style="color: #95a5a6;">共收录 {{ page.posts | size }} 篇笔记</p>
+  </header>
+
+  <div class="recursive-content">
+    {% assign next_depth = current_depth | plus: 1 %}
+    {% assign used_sub_cats = "" %}
+
+    {% for post in page.posts %}
+      {% if post.categories.size > next_depth %}
+        {% comment %} 存在下级：显示子专栏卡片 {% endcomment %}
+        {% assign sub_cat_name = post.categories[next_depth] %}
+        {% unless used_sub_cats contains sub_cat_name %}
+          <a href="{{ site.baseurl }}/columns/{{ sub_cat_name | slugify }}/" class="sub-column-card">
+            <i class="fas fa-folder-open" style="color:#e67e22; margin-right:15px; font-size: 1.2rem;"></i>
+            <span class="sub-card-name">{{ sub_cat_name }}</span>
+            <span style="font-size: 0.85rem; color: #bdc3c7;">进入子专栏 <i class="fas fa-chevron-right"></i></span>
+          </a>
+          {% capture used_sub_cats %}{{ used_sub_cats }} | {{ sub_cat_name }}{% endcapture %}
+        {% endunless %}
+      {% else %}
+        {% comment %} 到底了：显示文章列表 {% endcomment %}
+        <a href="{{ post.url | relative_url }}" class="post-item-final">
+          <span class="post-title-final">{{ post.title }}</span>
+          <span class="post-date-final"><i class="far fa-calendar-alt"></i> {{ post.date | date: "%Y-%m-%d" }}</span>
+        </a>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
