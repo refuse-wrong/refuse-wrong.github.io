@@ -22,10 +22,21 @@
       display: flex; justify-content: space-between; align-items: center;
     }
 
+    /* 左侧区域容器 */
+    .nav-left-zone {
+      display: flex;
+      align-items: center;
+      gap: 20px; /* 两个按钮之间的间距 */
+    }
+
     .site-nav a.nav-link {
       text-decoration: none; color: #2c3e50; font-family: 'ZCOOL XiaoWei', serif;
       font-size: 1.1rem; transition: opacity 0.3s;
+      display: flex; align-items: center; gap: 5px;
+      cursor: pointer;
     }
+
+    .site-nav a.nav-link:hover { opacity: 0.7; }
 
     .nav-right-zone { display: flex; align-items: center; gap: 20px; }
 
@@ -90,7 +101,13 @@
 <body>
 
   <nav class="site-nav">
-    <a href="{{ '/' | relative_url }}" class="nav-link">🏠 首页</a>
+    <div class="nav-left-zone">
+      <a onclick="history.back()" class="nav-link" style="font-size: 1rem; color: #555;">
+        <i class="fas fa-chevron-left"></i> 上一页
+      </a>
+
+      <a href="{{ '/' | relative_url }}" class="nav-link">🏠 首页</a>
+    </div>
 
     <div class="nav-right-zone">
       <div class="search-container">
@@ -103,8 +120,8 @@
 
       <div class="social-matrix">
         <a href="https://github.com/refuse-wrong" class="social-icon" target="_blank"><i class="fab fa-github"></i></a>
-        <a href="https://www.douyin.com/..." class="social-icon" target="_blank"><i class="fab fa-tiktok"></i></a>
-        <a href="mailto:..." class="social-icon"><i class="fas fa-envelope"></i></a>
+        <a href="https://www.douyin.com/user/MS4wLjABAAAA8mEPqO35J9NkASoc7aMvH_15zeydXyYmonV-QzRNSso?from_tab_name=main" class="social-icon" target="_blank"><i class="fab fa-tiktok"></i></a>
+        <a href="mailto:1473176192@qq.com" class="social-icon"><i class="fas fa-envelope"></i></a>
       </div>
     </div>
   </nav>

@@ -151,3 +151,20 @@ layout: default
     </script>
   </div>
 </div>
+
+<script>
+  MathJax = {
+    tex: {
+      // 关键设置：允许使用单美元符号 $ 作为行内公式
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      processEscapes: true
+    },
+    svg: {
+      fontCache: 'global'
+    }
+  };
+</script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
