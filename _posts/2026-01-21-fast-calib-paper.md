@@ -15,7 +15,7 @@ categories: [学习, SLAM, 雷达SLAM, FAST-LVIO]
 - **Edge Dilation Compensation (边缘膨胀补偿)**：LiDAR 光斑有一定大小，扫描边缘时会产生“膨胀”效应，导致测量距离偏差，算法对此进行了数学补偿。
 
 <div style="text-align: center;">
-  <img src="/assets/images/2026-01-21-fast-calib-target.jpg" style="width: 60%; height: auto; border-radius: 4px;">
+  <img src="/assets/images/FAST-LVIO/2026-01-21-fast-calib-target.png" style="width: 90%; height: auto; border-radius: 4px;">
   <p style="color: #666; font-size: 0.9rem; margin-top: 5px;">FAST-Calib 定制标定板示意</p>
 </div>
 
