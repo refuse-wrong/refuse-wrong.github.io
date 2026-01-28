@@ -98,6 +98,44 @@ layout: default
     font-size: 90%;
   }
 
+  /* ============================
+     新增：表格样式优化
+     ============================ */
+  .post-content table {
+    width: 100%;
+    border-collapse: collapse; /* 关键：显示边框 */
+    margin: 30px 0;
+    border-spacing: 0;
+    overflow-x: auto; 
+    display: block;
+  }
+  
+  @media (min-width: 600px) {
+    .post-content table {
+      display: table;
+    }
+  }
+
+  .post-content table th,
+  .post-content table td {
+    border: 1px solid #eaedf0; /* 边框颜色 */
+    padding: 12px 15px;
+  }
+
+  .post-content table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #2c3e50;
+  }
+
+  .post-content table tr:nth-child(even) {
+    background-color: #fcfcfc;
+  }
+
+  .post-content table tr:hover {
+    background-color: rgba(230, 126, 34, 0.05);
+  }
+
   /* 响应式：针对移动端 */
   @media (max-width: 600px) {
     .post-container {
