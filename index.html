@@ -258,6 +258,10 @@ title: Home
     border-left-color: #8e44ad;
   }
 
+  .ai-section .level-1-title {
+    border-left-color: #2980b9;
+  }
+
   @media (max-width: 1100px) {
     .main-wrapper {
       grid-template-columns: 1fr;
@@ -292,15 +296,16 @@ title: Home
       <p style="letter-spacing: 2px; color: #7f8c8d;">我们漫游于此，只为在平行的时空里与自己相遇</p>
     </header>
 
-    {% assign main_categories = "学习,生活,游戏" | split: "," %}
+    {% assign main_categories = "学习,生活,游戏,AI" | split: "," %}
 
     {% for root_cat in main_categories %}
     <section
-      class="category-section {% if root_cat == '学习' %}study-section{% elsif root_cat == '生活' %}life-section{% else %}game-section{% endif %}">
+      class="category-section {% if root_cat == '学习' %}study-section{% elsif root_cat == '生活' %}life-section{% elsif root_cat == '游戏' %}game-section{% else %}ai-section{% endif %}">
       <h2 class="level-1-title">
         {% if root_cat == "学习" %}<i class="fas fa-book-reader"></i> 学习 · 向上生长
         {% elsif root_cat == "生活" %}<i class="fas fa-mug-hot"></i> 生活 · 烟火人间
-        {% else %}<i class="fas fa-gamepad"></i> 游戏 · 虚拟现实{% endif %}
+        {% elsif root_cat == "游戏" %}<i class="fas fa-gamepad"></i> 游戏 · 虚拟现实
+        {% else %}<i class="fas fa-robot"></i> AI · 智能探索{% endif %}
       </h2>
 
       {% assign cat_posts = site.categories[root_cat] %}
